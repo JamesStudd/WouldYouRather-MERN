@@ -1,0 +1,2 @@
+export const GET_QUESTION = "GET_QUESTION";
+export const QUESTION_LOADING = "QUESTION_LOADING";
