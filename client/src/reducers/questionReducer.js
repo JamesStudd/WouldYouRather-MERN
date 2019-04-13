@@ -1,4 +1,8 @@
-import { GET_QUESTION, QUESTION_LOADING } from "./../actions/types";
+import {
+  GET_QUESTION,
+  QUESTION_LOADING,
+  GET_ALL_QUESTIONS
+} from "./../actions/types";
 
 const initialState = {
   options: [],
@@ -17,6 +21,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         loading: true
+      };
+    case GET_ALL_QUESTIONS:
+      return {
+        ...state,
+        options: action.payload,
+        loading: false
       };
     default:
       return state;
