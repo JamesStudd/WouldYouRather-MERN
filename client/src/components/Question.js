@@ -16,14 +16,14 @@ class Question extends Component {
   render() {
     return (
       <Container>
-        {this.props.question.options ? (
+        {this.props.loading ? (
+          <p>Loading</p>
+        ) : (
           <ListGroup>
-            {this.props.question.options.map((option, index) => (
-              <ListGroupItem key={index}>{option}</ListGroupItem>
+            {this.props.options.map(option => (
+              <ListGroupItem key={option._id}>{option.scenario}</ListGroupItem>
             ))}
           </ListGroup>
-        ) : (
-          <p>Loading</p>
         )}
       </Container>
     );
@@ -31,7 +31,8 @@ class Question extends Component {
 }
 
 const mapStateToProps = state => ({
-  question: state.question.question
+  options: state.question.options,
+  loading: state.question.loading
 });
 
 export default connect(

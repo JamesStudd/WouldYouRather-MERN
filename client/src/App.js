@@ -10,7 +10,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <div className="App">
-          <h1>Hello World</h1>
+          <h1>Would you rather:</h1>
           <Question />
         </div>
       </Provider>

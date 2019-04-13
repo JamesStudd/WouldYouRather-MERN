@@ -8,14 +8,18 @@ const Question = require("./../../models/Question");
 // @desc    Get random question
 // @access  Public
 router.get("/", (req, res) => {
-  Question.countDocuments().exec((err, count) => {
-    let random = Math.floor(Math.random() * count);
-
-    Question.findOne()
-      .skip(random)
-      .exec((err, result) => {
-        res.status(200).send(result);
-      });
+  Question.aggregate([{ $sample: { size: 1 } }], (err, doc) => {
+    if (err) return res.status(400).send({ msg: "Failed to find questions." });
+    if (doc) {
+      Question.aggregate(
+        [{ $match: { theme: doc[0].theme } }, { $sample: { size: 2 } }],
+        (err, docs) => {
+          if (err)
+            return res.status(400).send({ msg: "Failed to find questions." });
+          return res.status(200).send(docs);
+        }
+      );
+    }
   });
 });
 
@@ -23,15 +27,16 @@ router.get("/", (req, res) => {
 // @desc    Save a question
 // @access  Public
 router.post("/", (req, res) => {
-  if (!req.body || !req.body.options || req.body.options.count < 2)
+  if (!req.body || !req.body.options || !Array.isArray(req.body.options))
     return res.status(400).json({ msg: "Please supply all fields." });
 
-  const newQuestion = new Question({
-    options: req.body.options,
-    results: Array(req.body.options.length).fill(0)
-  });
+  console.log(req.body.options);
 
-  newQuestion.save().then(question => res.json(question));
+  Question.insertMany(req.body.options, (err, docs) => {
+    if (err) return res.status(400).send(err);
+
+    console.log("Inserted documents");
+  });
 });
 
 module.exports = router;

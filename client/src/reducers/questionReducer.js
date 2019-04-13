@@ -1,7 +1,7 @@
 import { GET_QUESTION, QUESTION_LOADING } from "./../actions/types";
 
 const initialState = {
-  question: {},
+  options: [],
   loading: false
 };
 
@@ -10,7 +10,7 @@ export default function(state = initialState, action) {
     case GET_QUESTION:
       return {
         ...state,
-        question: action.payload,
+        options: action.payload,
         loading: false
       };
     case QUESTION_LOADING:

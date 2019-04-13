@@ -2,14 +2,22 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const QuestionSchema = new Schema({
-  options: {
-    type: [String],
+  scenario: {
+    type: String,
     required: true,
-    minlength: 2
+    unique: true
   },
-  results: {
-    type: [Number],
+  theme: {
+    type: String,
     required: true
+  },
+  timesShown: {
+    type: Number,
+    default: 0
+  },
+  timesPicked: {
+    type: Number,
+    default: 0
   },
   dateCreated: {
     type: Date,
