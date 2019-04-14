@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const auth = require("./../../middleware/auth");
 
 // Item Model
 const Question = require("./../../models/Question");
@@ -43,7 +44,7 @@ router.get("/", (req, res) => {
 // @route   POST api/question
 // @desc    Save a question
 // @access  Public
-router.post("/", (req, res) => {
+router.post("/", auth, (req, res) => {
   if (!req.body || !req.body.options || !Array.isArray(req.body.options))
     return res.status(400).json({ msg: "Please supply all fields." });
 
@@ -54,7 +55,7 @@ router.post("/", (req, res) => {
   });
 });
 
-router.delete("/", (req, res) => {
+router.post("/delete", auth, (req, res) => {
   if (!req.body) return res.status(400).json({ success: false });
 
   Question.deleteMany({ _id: { $in: req.body } }, (err, response) => {
@@ -64,7 +65,7 @@ router.delete("/", (req, res) => {
   });
 });
 
-router.put("/:id", (req, res) => {
+router.put("/:id", auth, (req, res) => {
   Question.findOneAndUpdate(
     { _id: req.params.id },
     req.body,

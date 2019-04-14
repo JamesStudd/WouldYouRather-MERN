@@ -9,6 +9,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use("/api/question", require("./routes/api/question"));
+app.use("/api/auth", require("./routes/api/auth"));
 
 const port = process.env.PORT || 5000;
 
