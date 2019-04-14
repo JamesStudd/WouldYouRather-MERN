@@ -1,5 +1,4 @@
 ☐ Revisit how many times we get things from the DB, think of some ways to speed up the process @low @est(2 hours)
-☐ Look into adding comments @low @est(4 hours)
 ☐ Think of a way to get all themes stored locally
   // This may increase the speed that we get 2 random options, as at the moment
   // we need to make a request to the DB, get the theme, then make 2 more requests

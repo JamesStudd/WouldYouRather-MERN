@@ -4,41 +4,54 @@ const auth = require("./../../middleware/auth");
 
 // Item Model
 const Question = require("./../../models/Question");
+let themes = [];
+
+const getThemes = () => {
+  themes = [];
+  Question.find({}, (err, docs) => {
+    if (err) return err;
+    if (docs) {
+      docs.forEach(doc => {
+        if (!themes.includes(doc.theme.toLowerCase())) {
+          themes.push(doc.theme.toLowerCase());
+        }
+      });
+    }
+  });
+};
+getThemes();
 
 // @route   GET api/item
 // @desc    Get random question
 // @access  Public
 router.get("/", (req, res) => {
-  Question.aggregate([{ $sample: { size: 1 } }], (err, doc) => {
-    if (err) return res.status(400).send({ msg: "Failed to find questions." });
-    if (doc && doc.length > 0) {
-      Question.aggregate(
-        [{ $match: { theme: doc[0].theme } }, { $sample: { size: 2 } }],
-        (err, docs) => {
-          if (err)
-            return res.status(400).send({ msg: "Failed to find questions." });
+  const theme = themes[Math.floor(Math.random() * themes.length)];
+  Question.aggregate(
+    [
+      { $match: { theme: { $regex: new RegExp(theme, "i") } } },
+      { $sample: { size: 2 } }
+    ],
+    (err, docs) => {
+      if (err)
+        return res.status(400).send({ msg: "Failed to find questions." });
 
-          if (docs && docs.length >= 2) {
-            let arr = [docs[0]._id, docs[1]._id];
+      if (docs && docs.length >= 2) {
+        let arr = [docs[0]._id, docs[1]._id];
 
-            Question.updateMany(
-              { _id: { $in: arr } },
-              { $inc: { timesShown: 1 } },
-              (err, response) => {
-                if (err) return res.status(400).json({ msg: err.msg });
+        Question.updateMany(
+          { _id: { $in: arr } },
+          { $inc: { timesShown: 1 } },
+          (err, response) => {
+            if (err) return res.status(400).json({ msg: err.msg });
 
-                return res.status(200).send(docs);
-              }
-            );
-          } else {
-            return res.status(404).json({ msg: "Failed to find questions" });
+            return res.status(200).send(docs);
           }
-        }
-      );
-    } else {
-      return res.status(400).send({ msg: "Failed to find any questions." });
+        );
+      } else {
+        return res.status(404).json({ msg: "Failed to find questions" });
+      }
     }
-  });
+  );
 });
 
 // @route   POST api/question
@@ -51,6 +64,10 @@ router.post("/", auth, (req, res) => {
   Question.insertMany(req.body.options, (err, docs) => {
     if (err) return res.status(400).send(err);
 
+    req.body.options.forEach(option => {
+      if (!themes.includes(option.theme)) themes.push(option.theme);
+    });
+
     res.status(200).send({ success: true });
   });
 });
@@ -61,8 +78,21 @@ router.post("/delete", auth, (req, res) => {
   Question.deleteMany({ _id: { $in: req.body } }, (err, response) => {
     if (err) return res.status(400).json({ success: false });
 
+    getThemes();
     return res.status(200).json({ success: true });
   });
+});
+
+router.get("/reset", auth, (req, res) => {
+  Question.updateMany(
+    {},
+    { timesPicked: 0, timesShown: 0 },
+    (err, response) => {
+      if (err) return res.status(400).json({ msg: err.msg });
+
+      return res.status(200).json({ success: true });
+    }
+  );
 });
 
 router.put("/:id", auth, (req, res) => {

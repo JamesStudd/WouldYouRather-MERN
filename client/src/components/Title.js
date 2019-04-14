@@ -13,7 +13,9 @@ class Title extends Component {
   render() {
     return (
       <div className={"jumbotron "}>
-        {this.props.isAuthenticated && <Button onClick={this.props.logout} />}
+        {this.props.isAuthenticated && (
+          <Button onClick={this.props.logout}>Logout</Button>
+        )}
         <h1 style={{ textAlign: "center" }} className={"display-4"}>
           Would You Rather
         </h1>

@@ -6,6 +6,7 @@ import {
   deleteQuestions,
   editQuestion
 } from "./../actions/questionActions";
+import { loadUser } from "./../actions/authActions";
 import PropTypes from "prop-types";
 import { Spinner } from "reactstrap";
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
@@ -16,6 +17,7 @@ import("react-bootstrap-table/dist/react-bootstrap-table-all.min.css");
 
 class Admin extends Component {
   componentDidMount() {
+    this.props.loadUser();
     if (this.props.isAuthenticated) {
       this.props.getAllQuestions();
     }
@@ -37,7 +39,8 @@ class Admin extends Component {
     addQuestion: PropTypes.func.isRequired,
     deleteQuestion: PropTypes.func.isRequired,
     editQuestion: PropTypes.func.isRequired,
-    isAuthenticated: PropTypes.bool
+    isAuthenticated: PropTypes.bool,
+    loadUser: PropTypes.func.isRequired
   };
 
   addRow = row => {
@@ -74,6 +77,7 @@ class Admin extends Component {
         disabled
         value={seqId}
         className={`${editorClass}`}
+        key={5}
       />
     );
   };
@@ -117,7 +121,16 @@ class Admin extends Component {
                 Scenario
               </TableHeaderColumn>
 
-              <TableHeaderColumn dataField="theme" dataSort width="12%">
+              <TableHeaderColumn
+                dataField="theme"
+                dataSort
+                width="12%"
+                dataFormat={(cell, row) => {
+                  return (
+                    cell.charAt(0).toUpperCase() + cell.slice(1).toLowerCase()
+                  );
+                }}
+              >
                 Theme
               </TableHeaderColumn>
 
@@ -170,6 +183,7 @@ export default connect(
     getAllQuestions,
     addQuestion,
     deleteQuestion: deleteQuestions,
-    editQuestion
+    editQuestion,
+    loadUser
   }
 )(Admin);

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button, Form, FormGroup, Label, Input, Alert } from "reactstrap";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { login } from "./../actions/authActions";
+import { login, loadUser } from "./../actions/authActions";
 import { LOGIN_FAIL } from "./../actions/types";
 import { clearErrors } from "./../actions/errorActions";
 
@@ -17,8 +17,13 @@ class Login extends Component {
     isAuthenticated: PropTypes.bool,
     error: PropTypes.object.isRequired,
     login: PropTypes.func.isRequired,
-    clearErrors: PropTypes.func.isRequired
+    clearErrors: PropTypes.func.isRequired,
+    loadUser: PropTypes.func.isRequired
   };
+
+  componentDidMount() {
+    this.props.loadUser();
+  }
 
   componentDidUpdate(prevProps) {
     const { error, isAuthenticated } = this.props;
@@ -98,5 +103,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { login, clearErrors }
+  { login, clearErrors, loadUser }
 )(Login);
