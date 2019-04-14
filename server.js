@@ -12,7 +12,7 @@ app.use("/api/question", require("./routes/api/question"));
 
 const port = process.env.PORT || 5000;
 
-const db = process.env.WYRMlab;
+const db = process.env.WYRMlab || "mongodb://localhost:27017/wyrdev";
 mongoose
   .connect(db, {
     useNewUrlParser: true,

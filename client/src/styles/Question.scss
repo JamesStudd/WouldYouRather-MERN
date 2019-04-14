@@ -1,0 +1,36 @@
+@import "variables.scss";
+
+.outside-row {
+  height: 200px;
+}
+
+.option {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  font-size: 1.5rem;
+}
+
+#leftOption {
+  background: $blue;
+  color: white;
+  padding-top: 10%;
+}
+
+#leftOption:hover {
+  background: lighten($blue, 10%);
+}
+
+#rightOption {
+  background: $red;
+  color: white;
+  padding-top: 10%;
+}
+
+#rightOption:hover {
+  background: lighten($red, 10%);
+}

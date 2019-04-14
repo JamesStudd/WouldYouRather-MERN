@@ -4,7 +4,8 @@ import {
   GET_ALL_QUESTIONS,
   ADD_QUESTION,
   DELETE_QUESTION,
-  EDIT_QUESTION
+  EDIT_QUESTION,
+  PICK_QUESTION
 } from "./types";
 import axios from "axios";
 
@@ -56,6 +57,15 @@ export const editQuestion = question => dispatch => {
   axios.put(`/api/question/${question._id}`, question).then(res =>
     dispatch({
       type: EDIT_QUESTION,
+      payload: res.data
+    })
+  );
+};
+
+export const pickQuestion = id => dispatch => {
+  axios.post(`/api/question/pick/${id}`, id).then(res =>
+    dispatch({
+      type: PICK_QUESTION,
       payload: res.data
     })
   );

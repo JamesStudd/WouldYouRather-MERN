@@ -75,7 +75,6 @@ class Admin extends Component {
               blurToSave: true,
               afterSaveCell: this.editRow
             }}
-            dark
           >
             <TableHeaderColumn dataField="_id" isKey={true} hidden={true}>
               ID
@@ -88,9 +87,11 @@ class Admin extends Component {
             >
               Scenario
             </TableHeaderColumn>
+
             <TableHeaderColumn dataField="theme" dataSort width="12%">
               Theme
             </TableHeaderColumn>
+
             <TableHeaderColumn
               dataField="dateCreated"
               dataSort
@@ -102,6 +103,7 @@ class Admin extends Component {
             >
               Created Date
             </TableHeaderColumn>
+
             <TableHeaderColumn
               dataField="timesShown"
               width="10%"
@@ -109,6 +111,7 @@ class Admin extends Component {
             >
               Shown
             </TableHeaderColumn>
+
             <TableHeaderColumn
               dataField="timesPicked"
               width="10%"

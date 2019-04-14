@@ -1,0 +1,6 @@
+☐ Implement auth for the admin route @high @est(2 hours)
+☐ Add an another component to just display "Would You Rather" title
+☐ Make it so when an option is shown 'timesShown' is displayed
+☐ Make clicking the choice actually do something @started(19-04-14 00:17)
+  ☐ Probably call getQuestions to 'refresh' the page
+  ☐ Make clicking the choice add one to 'timesPicked'

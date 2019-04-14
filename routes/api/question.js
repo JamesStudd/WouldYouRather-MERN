@@ -10,15 +10,32 @@ const Question = require("./../../models/Question");
 router.get("/", (req, res) => {
   Question.aggregate([{ $sample: { size: 1 } }], (err, doc) => {
     if (err) return res.status(400).send({ msg: "Failed to find questions." });
-    if (doc) {
+    if (doc && doc.length > 0) {
       Question.aggregate(
         [{ $match: { theme: doc[0].theme } }, { $sample: { size: 2 } }],
         (err, docs) => {
           if (err)
             return res.status(400).send({ msg: "Failed to find questions." });
-          return res.status(200).send(docs);
+
+          if (docs && docs.length >= 2) {
+            let arr = [docs[0]._id, docs[1]._id];
+
+            Question.updateMany(
+              { _id: { $in: arr } },
+              { $inc: { timesShown: 1 } },
+              (err, response) => {
+                if (err) return res.status(400).json({ msg: err.msg });
+
+                return res.status(200).send(docs);
+              }
+            );
+          } else {
+            return res.status(404).json({ msg: "Failed to find questions" });
+          }
         }
       );
+    } else {
+      return res.status(400).send({ msg: "Failed to find any questions." });
     }
   });
 });
@@ -49,6 +66,17 @@ router.put("/:id", (req, res) => {
   Question.findOneAndUpdate(
     { _id: req.params.id },
     req.body,
+    (err, question) => {
+      if (err) return res.status(400).json({ msg: err.msg });
+      res.status(200).send(question);
+    }
+  );
+});
+
+router.post("/pick/:id", (req, res) => {
+  Question.findByIdAndUpdate(
+    req.params.id,
+    { $inc: { timesPicked: 1 } },
     (err, question) => {
       if (err) return res.status(400).json({ msg: err.msg });
       res.status(200).send(question);
