@@ -12,13 +12,17 @@
   -ms-user-select: none;
   user-select: none;
 
-  font-size: 1.5rem;
+  font-size: 4vmin;
 }
 
 #leftOption {
   background: $blue;
   color: white;
-  padding-top: 10%;
+  vertical-align: middle;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #leftOption:hover {
@@ -28,7 +32,11 @@
 #rightOption {
   background: $red;
   color: white;
-  padding-top: 10%;
+  vertical-align: middle;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #rightOption:hover {

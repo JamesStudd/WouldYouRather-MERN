@@ -44,11 +44,10 @@ export const addQuestion = item => dispatch => {
   );
 };
 
-export const deleteQuestion = id => dispatch => {
-  axios.delete(`/api/question/${id}`).then(res =>
+export const deleteQuestions = ids => dispatch => {
+  axios.delete(`/api/question`, { data: ids }).then(res =>
     dispatch({
-      type: DELETE_QUESTION,
-      payload: id
+      type: DELETE_QUESTION
     })
   );
 };

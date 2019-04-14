@@ -1,6 +1,14 @@
 ☐ Implement auth for the admin route @high @est(2 hours)
-☐ Add an another component to just display "Would You Rather" title
-☐ Make it so when an option is shown 'timesShown' is displayed
-☐ Make clicking the choice actually do something @started(19-04-14 00:17)
-  ☐ Probably call getQuestions to 'refresh' the page
-  ☐ Make clicking the choice add one to 'timesPicked'
+☐ Implement the error actions
+☐ Revisit how many times we get things from the DB, think of some ways to speed up the process 
+☐ Add some more styling for the header
+☐ Look into adding comments
+
+Archive:
+  ✔ Add some more styling @started(19-04-14 02:23) @done(19-04-14 02:33) @lasted(10m48s)
+  ✔ A better way of vertically centering the option text @done(19-04-14 02:33)
+  ✔ Add an another component to just display "Would You Rather" title @done(19-04-14 02:18)
+  ✔ Make it so when an option is shown 'timesShown' is changed @done(19-04-14 02:18)
+  ✔ Make clicking the choice actually do something @started(19-04-14 00:17) @done(19-04-14 02:18) @lasted(2h1m28s)
+  ✔ Probably call getQuestions to 'refresh' the page @done(19-04-14 02:18)
+  ✔ Make clicking the choice add one to 'timesPicked' @done(19-04-14 02:18)

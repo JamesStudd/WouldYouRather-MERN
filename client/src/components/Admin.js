@@ -3,16 +3,16 @@ import { connect } from "react-redux";
 import {
   getAllQuestions,
   addQuestion,
-  deleteQuestion,
+  deleteQuestions,
   editQuestion
 } from "./../actions/questionActions";
 import PropTypes from "prop-types";
-import { Spinner } from "reactstrap";
+import { Spinner, Button } from "reactstrap";
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 import moment from "moment";
 
 import("react-bootstrap-table/dist/react-bootstrap-table.min.js");
-import("react-bootstrap-table/dist/react-bootstrap-table.min.css");
+import("react-bootstrap-table/dist/react-bootstrap-table-all.min.css");
 
 class Admin extends Component {
   componentDidMount() {
@@ -46,8 +46,9 @@ class Admin extends Component {
     }
   };
 
-  deleteRow = (rowKeys, row) => {
-    this.props.deleteQuestion(row[0]._id);
+  deleteRow = (rowKeys, rows) => {
+    const ids = rows.map(a => a._id);
+    this.props.deleteQuestion(ids);
     this.props.getAllQuestions();
   };
 
@@ -69,7 +70,7 @@ class Admin extends Component {
             insertRow={true}
             options={this.options}
             deleteRow={true}
-            selectRow={{ mode: "radio" }}
+            selectRow={{ mode: "checkbox" }}
             cellEdit={{
               mode: "click",
               blurToSave: true,
@@ -133,5 +134,10 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getAllQuestions, addQuestion, deleteQuestion, editQuestion }
+  {
+    getAllQuestions,
+    addQuestion,
+    deleteQuestion: deleteQuestions,
+    editQuestion
+  }
 )(Admin);

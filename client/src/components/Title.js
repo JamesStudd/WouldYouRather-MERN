@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import "./../styles/Title.scss";
 
 class Title extends Component {
   render() {
     return (
-      <div>
-        <h1 id={"title"}>Would You Rather</h1>
+      <div className={"jumbotron "}>
+        <h1 style={{ textAlign: "center" }} className={"display-4"}>
+          Would You Rather
+        </h1>
       </div>
     );
   }

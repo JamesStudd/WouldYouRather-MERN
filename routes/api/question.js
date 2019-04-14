@@ -54,12 +54,14 @@ router.post("/", (req, res) => {
   });
 });
 
-router.delete("/:id", (req, res) => {
-  Question.findById(req.params.id)
-    .then(question =>
-      question.remove().then(() => res.status(200).json({ success: true }))
-    )
-    .catch(err => res.status(404).json({ success: false }));
+router.delete("/", (req, res) => {
+  if (!req.body) return res.status(400).json({ success: false });
+
+  Question.deleteMany({ _id: { $in: req.body } }, (err, response) => {
+    if (err) return res.status(400).json({ success: false });
+
+    return res.status(200).json({ success: true });
+  });
 });
 
 router.put("/:id", (req, res) => {
