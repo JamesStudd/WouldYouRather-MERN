@@ -1,16 +1,18 @@
 ☐ Revisit how many times we get things from the DB, think of some ways to speed up the process @low @est(2 hours)
-☐ Think of a way to get all themes stored locally
-  // This may increase the speed that we get 2 random options, as at the moment
-  // we need to make a request to the DB, get the theme, then make 2 more requests
 ☐ Add some more options in
-☐ Think about ways we can display percentages on options
-  // At the moment we have "timesShown" and "timesPicked", we could possibly do something like
-  // Shown 10 times, picked 5, 50%. The problem is that the number won't match for the options
-  // Two options shown, 1 may have been shown 50 times before, the other may be shown once before.
-  // So the percentages could end up being like 50% and 100%.
 ☐ Fix the 'Each child in a list should have a unique "key" prop.' error when adding a new item
 
 Archive:
+  ✔ Think about ways we can display percentages on options @done(19-04-15 01:40)
+    // At the moment we have "timesShown" and "timesPicked", we could possibly do something like
+    // Shown 10 times, picked 5, 50%. The problem is that the number won't match for the options
+    // Two options shown, 1 may have been shown 50 times before, the other may be shown once before.
+    // So the percentages could end up being like 50% and 100%.
+  ✔ Change timesShown to after an option is picked @done(19-04-15 01:06)
+    // At the moment, if 2 options are shown but then the tab is closed, it would mess up statistics.
+  ✔ Think of a way to get all themes stored locally @done(19-04-14 22:48)
+    // This may increase the speed that we get 2 random options, as at the moment
+    // we need to make a request to the DB, get the theme, then make 2 more requests
   ✔ Implement auth for the admin route @high @est(2 hours) @started(19-04-14 04:37) @done(19-04-14 05:34) @lasted(57m30s)
   ✔ Implement the error actions @high @est(1 hour) @started(19-04-14 04:25) @done(19-04-14 05:34) @lasted(1h9m29s)
   ✔ Add some more styling for the header @done(19-04-14 04:00)

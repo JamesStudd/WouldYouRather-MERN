@@ -1,9 +1,5 @@
 @import "variables.scss";
 
-.outside-row {
-  height: 25vmin;
-}
-
 .option {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -13,16 +9,22 @@
   user-select: none;
 
   font-size: 3vmin;
-}
+  height: 25vmin;
 
-#leftOption {
-  background: $blue;
-  color: white;
   vertical-align: middle;
 
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.bottom-text {
+  color: grey;
+}
+
+#leftOption {
+  background: $blue;
+  color: white;
 }
 
 #leftOption:hover {
@@ -32,11 +34,6 @@
 #rightOption {
   background: $red;
   color: white;
-  vertical-align: middle;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 #rightOption:hover {

@@ -37,16 +37,7 @@ router.get("/", (req, res) => {
 
       if (docs && docs.length >= 2) {
         let arr = [docs[0]._id, docs[1]._id];
-
-        Question.updateMany(
-          { _id: { $in: arr } },
-          { $inc: { timesShown: 1 } },
-          (err, response) => {
-            if (err) return res.status(400).json({ msg: err.msg });
-
-            return res.status(200).send(docs);
-          }
-        );
+        return res.status(200).send(docs);
       } else {
         return res.status(404).json({ msg: "Failed to find questions" });
       }
@@ -106,13 +97,22 @@ router.put("/:id", auth, (req, res) => {
   );
 });
 
-router.post("/pick/:id", (req, res) => {
+router.post("/pick", (req, res) => {
   Question.findByIdAndUpdate(
-    req.params.id,
-    { $inc: { timesPicked: 1 } },
+    req.body.pickedId,
+    { $inc: { timesShown: 1, timesPicked: 1 } },
     (err, question) => {
       if (err) return res.status(400).json({ msg: err.msg });
-      res.status(200).send(question);
+
+      Question.findByIdAndUpdate(
+        req.body.otherId,
+        { $inc: { timesShown: 1 } },
+        (err, response) => {
+          if (err) return res.status(400).json({ msg: err.msg });
+
+          return res.status(200).json({ success: true });
+        }
+      );
     }
   );
 });

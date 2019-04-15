@@ -88,9 +88,9 @@ export const editQuestion = question => (dispatch, getState) => {
     );
 };
 
-export const pickQuestion = id => dispatch => {
+export const pickQuestion = (pickedId, otherId) => dispatch => {
   axios
-    .post(`/api/question/pick/${id}`, id)
+    .post(`/api/question/pick`, { pickedId, otherId })
     .then(res =>
       dispatch({
         type: PICK_QUESTION,
